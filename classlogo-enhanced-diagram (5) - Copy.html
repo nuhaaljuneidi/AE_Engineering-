@@ -1,0 +1,2871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make This Classroom Work - SBED Lab Interactive Experience</title>
+    <style>
+/* ============================================ */
+/* STYLES - Everything in one file! */
+/* ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2C5F7C;
+    --secondary-color: #4A9EC9;
+    --accent-color: #E67E22;
+    --accent-warm: #F4A261;
+    --success-color: #27AE60;
+    --warning-color: #F39C12;
+    --danger-color: #E74C3C;
+    --bg-light: #F8F9FA;
+    --bg-white: #FFFFFF;
+    --text-dark: #2C3E50;
+    --text-light: #7F8C8D;
+    --border-color: #DDD;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(180deg, #F3FAFF 0%, #FFFFFF 55%, #F7F9FB 100%);
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background: var(--bg-white);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+    position: relative;
+}
+
+/* Branding Section */
+.branding {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #E8F4F8 0%, #F0F9FF 100%);
+    border-radius: 12px;
+    border-bottom: 3px solid #4A9EC9;
+    gap: 1rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.sbed-logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.creator-info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.creator-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.creator-dept {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.creator-title {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.creator-email {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.creator-email:hover {
+    text-decoration: underline;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.subtitle {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.header-controls {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icon-btn {
+    background: var(--bg-light);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.icon-btn.muted {
+    opacity: 0.5;
+}
+
+.achievements-counter {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.badge-icon {
+    font-size: 1.2rem;
+}
+
+/* Main Container - 2 columns with problems spanning both */
+.container {
+    max-width: 1600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 2rem;
+    align-items: start;
+    grid-template-areas:
+        "intro intro"
+        "sidebar content"
+        "problems problems";
+}
+
+/* Intro/Tutorial Section */
+.intro-section {
+    grid-area: intro;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%);
+    border: 3px solid var(--accent-warm);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-section h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.intro-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--secondary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.intro-card h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.intro-card p {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.intro-footer {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+}
+
+.intro-toggle {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.intro-toggle:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.intro-section.collapsed {
+    padding: 1rem 2rem;
+}
+
+.intro-section.collapsed .intro-content {
+    display: none;
+}
+
+.intro-section.collapsed h2 {
+    margin-bottom: 0;
+}
+
+/* Layer Controls - Vertical sidebar on left */
+.layer-controls {
+    grid-area: sidebar;
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.layer-controls h2 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.helper-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.layer-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--bg-light);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.layer-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(74, 158, 201, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.layer-toggle:hover::before {
+    left: 100%;
+}
+
+.layer-toggle:hover {
+    background: #E8F4F8;
+    border-color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.layer-toggle:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.layer-toggle.active {
+    background: linear-gradient(135deg, #E8F4F8 0%, #D4EDFA 100%);
+    border-color: var(--secondary-color);
+}
+
+.layer-toggle.active .toggle-indicator {
+    background: var(--success-color);
+    box-shadow: 0 0 10px var(--success-color);
+}
+
+.toggle-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--border-color);
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.layer-icon {
+    font-size: 1.2rem;
+}
+
+.bulk-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 0.6rem;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.info-panel {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 8px;
+}
+
+.info-panel h3 {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.info-panel p {
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+    transition: opacity 0.3s ease;
+}
+
+/* Main content area - diagram and problems */
+.main-content {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* SVG Container */
+.svg-container {
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    position: relative;
+    animation: zoomIn 0.6s ease-out;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.interaction-hint {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 100;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+.pulse-text {
+    animation: pulse-text 2s infinite;
+}
+
+@keyframes pulse-text {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+#classroomSVG {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.layer-group {
+    transition: opacity 0.5s ease, filter 0.3s ease;
+}
+
+.layer-group.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.layer-group.highlight {
+    filter: drop-shadow(0 0 10px var(--accent-color));
+    animation: glow-pulse 1.5s ease-in-out;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 5px var(--accent-color)); }
+    50% { filter: drop-shadow(0 0 15px var(--accent-color)); }
+}
+
+.interactive-element {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.interactive-element:hover {
+    filter: brightness(1.2);
+}
+
+/* Particle Canvas */
+.particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+/* Hotspots */
+.hotspots-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hotspot {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-warm) 100%);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+    transform: translate(-50%, -50%);
+    transition: var(--transition);
+    box-shadow: 0 3px 8px rgba(230, 126, 34, 0.5);
+    z-index: 40;
+    animation: hotspot-appear 0.6s ease-out backwards;
+}
+
+@keyframes hotspot-appear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.4);
+    box-shadow: 0 6px 16px rgba(230, 126, 34, 0.7);
+}
+
+.hotspot:hover .hotspot-label {
+    opacity: 1;
+    transform: translateY(-100%);
+}
+
+.hotspot:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+.hotspot.hidden {
+    display: none;
+}
+
+.hotspot-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--accent-color);
+    opacity: 0.6;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
+    }
+}
+
+.hotspot-label {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80%);
+    background: var(--text-dark);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.hotspot:hover .hotspot-label {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-100%);
+}
+
+.hotspot-label::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--text-dark);
+}
+
+/* Popover */
+.popover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    max-width: 450px;
+    width: 90%;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.popover:not(.hidden) {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popover.hidden {
+    display: none;
+}
+
+.popover-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--bg-light);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-light);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.popover-close:hover {
+    background: var(--danger-color);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.popover-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: icon-bounce 0.6s ease-out;
+}
+
+@keyframes icon-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.popover h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    padding-right: 2rem;
+    font-size: 1.3rem;
+}
+
+.popover p {
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Right Panel */
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Indicators - Hidden, will show in problem cards */
+.indicators {
+    display: none;
+}
+
+.indicators h2 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.indicator {
+    margin-bottom: 1.25rem;
+}
+
+.indicator:last-of-type {
+    margin-bottom: 0.5rem;
+}
+
+.indicator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.indicator-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+.indicator-value {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1rem;
+    animation: number-pop 0.3s ease;
+}
+
+@keyframes number-pop {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.indicator-bar-container {
+    height: 28px;
+    background: var(--bg-light);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.indicator-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color) 0%, var(--secondary-color) 100%);
+    border-radius: 14px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.indicator-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.indicator-bar[aria-valuenow="0"],
+.indicator-bar[aria-valuenow^="1"],
+.indicator-bar[aria-valuenow^="2"],
+.indicator-bar[aria-valuenow^="3"] {
+    background: linear-gradient(90deg, var(--danger-color) 0%, #C0392B 100%);
+}
+
+.indicator-bar[aria-valuenow^="4"],
+.indicator-bar[aria-valuenow^="5"],
+.indicator-bar[aria-valuenow^="6"] {
+    background: linear-gradient(90deg, var(--warning-color) 0%, #E67E22 100%);
+}
+
+.indicator-status {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.update-log {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #E8F4F8 0%, #D4EDFA 100%);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    min-height: 3rem;
+    border-left: 4px solid var(--secondary-color);
+    animation: log-update 0.5s ease;
+}
+
+@keyframes log-update {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Problems Panel - Full width at bottom spanning both columns */
+.problems-panel {
+    grid-area: problems;
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 100%;
+}
+
+.problems-panel h2 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.problem-container {
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.problem {
+    display: block;
+    animation: problem-slide 0.4s ease;
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+}
+
+@keyframes problem-slide {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.problem-title {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    padding: 1rem;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%);
+    border-radius: 8px;
+    border-left: 4px solid var(--warning-color);
+}
+
+/* Problem-specific score indicators */
+.problem-scores {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--bg-white);
+    border-radius: 8px;
+}
+
+.problem-hint {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-left: 4px solid var(--secondary-color);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+}
+
+.problem-affects {
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+    border-left: 4px solid #9C27B0;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+/* Final Grade Display */
+.final-grade {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    border: 3px solid var(--success-color);
+    border-radius: 16px;
+    text-align: center;
+    display: none;
+    animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.final-grade.visible {
+    display: block;
+}
+
+.final-grade h3 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.grade-letter {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--success-color);
+    margin: 1rem 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.grade-letter.grade-a { color: #00B894; }
+.grade-letter.grade-b { color: #00D2A3; }
+.grade-letter.grade-c { color: #FDCB6E; }
+.grade-letter.grade-d { color: #F7931E; }
+.grade-letter.grade-f { color: #E17055; }
+
+.grade-message {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.grade-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.grade-score {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.problem-score-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.problem-score-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.problem-score-bar {
+    height: 6px;
+    background: var(--bg-light);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.problem-score-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+}
+
+.fixes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.fix-btn {
+    padding: 0.85rem;
+    background: var(--bg-light);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+}
+
+.fix-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(74, 158, 201, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.fix-btn:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.fix-btn:hover:not(:disabled) {
+    background: #E8F4F8;
+    border-color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.fix-btn:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.fix-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.fix-btn.selected {
+    background: linear-gradient(135deg, var(--success-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border-color: var(--success-color);
+    animation: button-select 0.4s ease;
+}
+
+@keyframes button-select {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.fix-label {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.fix-btn.selected .fix-label {
+    background: white;
+    color: var(--success-color);
+}
+
+.explanation {
+    padding: 1rem;
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    border-left: 4px solid var(--success-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: none;
+    animation: explanation-appear 0.5s ease;
+}
+
+@keyframes explanation-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.explanation.visible {
+    display: block;
+}
+
+.problem-controls {
+    display: none;
+}
+
+.problem-indicator {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-weight: 700;
+    background: var(--bg-light);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.btn-reset {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--danger-color) 0%, #C0392B 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.btn-reset:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(231, 76, 60, 0.3);
+}
+
+.btn-reset:active {
+    transform: translateY(0);
+}
+
+/* Achievement Toast */
+.achievement-toast {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: var(--text-dark);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 2000;
+    animation: toast-slide-in 0.5s ease;
+    max-width: 300px;
+}
+
+@keyframes toast-slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(400px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.achievement-toast.hidden {
+    display: none;
+}
+
+.achievement-icon {
+    font-size: 3rem;
+    animation: icon-spin 0.8s ease;
+}
+
+@keyframes icon-spin {
+    from { transform: rotate(0deg) scale(0.5); }
+    to { transform: rotate(360deg) scale(1); }
+}
+
+.achievement-text strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.achievement-text p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Footer */
+.page-footer {
+    background: linear-gradient(135deg, #2C5F7C 0%, #1a3f52 100%);
+    color: white;
+    padding: 2rem;
+    margin-top: 3rem;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-sbed-logo {
+    height: 70px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.footer-credits {
+    text-align: right;
+    color: white;
+}
+
+.footer-credits p {
+    margin: 0.35rem 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-credits strong {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.footer-email {
+    color: #4fc3f7;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "intro"
+            "sidebar"
+            "content"
+            "problems";
+    }
+    
+    .intro-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .toggle-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .problem-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .grade-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .branding {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .creator-info {
+        text-align: center;
+    }
+    
+    .sbed-logo {
+        height: 60px;
+    }
+
+    .container {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
+    }
+
+    .toggle-group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .svg-container {
+        padding: 1rem;
+    }
+
+    .popover {
+        max-width: 95%;
+        padding: 1.5rem;
+    }
+
+    .interaction-hint {
+        font-size: 0.8rem;
+        padding: 0.4rem 1rem;
+    }
+
+    .achievement-toast {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-credits {
+        text-align: center;
+    }
+    
+    .footer-sbed-logo {
+        height: 50px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+        /* Student name bar */
+        .student-bar {
+            margin: 0.75rem auto 0;
+            max-width: 900px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .student-label {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .student-input {
+            width: min(360px, 70vw);
+            padding: 0.6rem 0.8rem;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+            .student-input:focus {
+                border-color: var(--secondary-color);
+                box-shadow: 0 0 0 3px rgba(74, 158, 201, 0.25);
+            }
+
+        .student-greet {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        @media (max-width: 768px) {
+            .student-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .student-label {
+                align-self: flex-start;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Branding Section -->
+        <div class="branding">
+            <div class="logo-section">
+                <img src="sbed-lab-logo.png" alt="SBED Lab - Smart Building Energy Dynamics Lab" class="sbed-logo">
+            </div>
+            <div class="creator-info">
+                <div class="creator-name">Dr. Nuha Aljuneidi</div>
+                <div class="creator-dept">Civil and Architectural Engineering</div>
+                <div class="creator-title">Lawrence Technological University</div>
+            </div>
+        </div>
+
+        <h1>🏫 Make This Classroom Work</h1>
+        <p class="subtitle">Explore how building systems create comfortable, safe learning spaces</p>
+        <!-- Student Name Bar -->
+        <div class="student-bar" aria-label="Student info bar">
+            <label for="studentName" class="student-label">Student name:</label>
+            <input id="studentName"
+                   type="text"
+                   class="student-input"
+                   placeholder="Type your name…"
+                   autocomplete="name"
+                   maxlength="40" />
+            <span class="student-greet" id="studentGreet" aria-live="polite"></span>
+        </div>
+        <div class="header-controls">
+            <button id="soundToggle" class="icon-btn" aria-label="Toggle sound effects" title="Toggle sound">
+                🔊
+            </button>
+            <div class="achievements-counter">
+                <span class="badge-icon">🏆</span>
+                <span id="achievementCount">0/3</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Intro/Tutorial Section -->
+        <section class="intro-section" id="introSection">
+            <h2>📚 Learn the Basics First!</h2>
+            <div class="intro-content">
+                <div class="intro-grid">
+                    <div class="intro-card">
+                        <h3>❄️ HVAC System</h3>
+                        <p><strong>What it does:</strong> Brings in fresh outdoor air, filters it, heats or cools it, and circulates it through the room. The <strong>return path</strong> is where air flows back to be recycled.</p>
+                        <p><strong>Why it matters:</strong> Without fresh air, CO₂ builds up and students feel tired and stuffy!</p>
+                    </div>
+
+                    <div class="intro-card">
+                        <h3>🪟 Windows & Building Envelope</h3>
+                        <p><strong>What it does:</strong> Better windows (double or triple pane) reduce heat loss in winter and heat gain in summer. Shading blocks direct sun.</p>
+                        <p><strong>Why it matters:</strong> Bad windows = cold spots in winter, hot spots in summer, and wasted energy!</p>
+                    </div>
+
+                    <div class="intro-card">
+                        <h3>🏗️ Structure & Coordination</h3>
+                        <p><strong>What it does:</strong> Beams and columns hold up the building. Ducts (air tubes) and pipes need to fit around them.</p>
+                        <p><strong>Why it matters:</strong> NEVER cut structural elements! Teams must coordinate to make everything fit safely.</p>
+                    </div>
+                </div>
+
+                <div class="intro-footer">
+                    🎯 <strong>Your Goal:</strong> Solve 3 building problems and try to reach 85+ in all performance scores!
+                </div>
+            </div>
+            <button class="intro-toggle" onclick="toggleIntro()">Hide Tutorial</button>
+        </section>
+
+        <!-- Left Column: Layer Controls -->
+        <aside class="layer-controls" aria-label="Building system layer controls">
+            <h2>🔧 Building Systems</h2>
+            <p class="helper-text">Click to toggle · Watch them glow!</p>
+
+            <div class="toggle-group">
+                <button class="layer-toggle active" data-layer="architecture" aria-pressed="true">
+                    <span class="toggle-indicator"></span>
+                    <span class="layer-icon">🏛️</span>
+                    Architecture
+                </button>
+                <button class="layer-toggle active" data-layer="mechanical" aria-pressed="true">
+                    <span class="toggle-indicator"></span>
+                    <span class="layer-icon">❄️</span>
+                    Mechanical/HVAC
+                </button>
+                <button class="layer-toggle active" data-layer="electrical" aria-pressed="true">
+                    <span class="toggle-indicator"></span>
+                    <span class="layer-icon">⚡</span>
+                    Electrical
+                </button>
+                <button class="layer-toggle active" data-layer="structural" aria-pressed="true">
+                    <span class="toggle-indicator"></span>
+                    <span class="layer-icon">🏗️</span>
+                    Structural
+                </button>
+                <button class="layer-toggle active" data-layer="fire" aria-pressed="true">
+                    <span class="toggle-indicator"></span>
+                    <span class="layer-icon">🔥</span>
+                    Fire Protection
+                </button>
+                <button class="layer-toggle active" data-layer="envelope" aria-pressed="true">
+                    <span class="toggle-indicator"></span>
+                    <span class="layer-icon">🧱</span>
+                    Building Envelope
+                </button>
+            </div>
+
+            <div class="bulk-controls">
+                <button id="showAll" class="btn-secondary">✓ Show All</button>
+                <button id="hideAll" class="btn-secondary">✗ Hide All</button>
+            </div>
+
+            <div class="info-panel">
+                <h3>💡 Quick Tip</h3>
+                <p id="dynamicTip">Click the glowing hotspots to learn about each system!</p>
+            </div>
+        </aside>
+
+        <!-- Right Column: Main Content (Diagram + Problems) -->
+        <div class="main-content">
+            <!-- SVG Classroom -->
+            <section class="svg-container" aria-label="Interactive classroom cross-section">
+                <div class="interaction-hint">
+                    <span class="pulse-text">👆 Click the hotspots!</span>
+                </div>
+
+                <svg id="classroomSVG" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Classroom building systems cross-section">
+                    <!-- Background gradient -->
+                    <defs>
+                        <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="floorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#A0826D;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#8B7355;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+
+                        <!-- Hatching patterns for structural elements -->
+                        <pattern id="steelHatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="#333" stroke-width="1" />
+                        </pattern>
+
+                        <pattern id="columnHatch" patternUnits="userSpaceOnUse" width="10" height="10">
+                            <line x1="0" y1="0" x2="10" y2="10" stroke="#222" stroke-width="1" />
+                            <line x1="10" y1="0" x2="0" y2="10" stroke="#222" stroke-width="1" />
+                        </pattern>
+
+                        <!-- Insulation texture -->
+                        <pattern id="insulationTexture" patternUnits="userSpaceOnUse" width="15" height="8">
+                            <path d="M0,4 Q3,0 6,4 T12,4 T18,4" stroke="#FFB700" stroke-width="2" fill="none" opacity="0.6" />
+                        </pattern>
+
+                        <!-- Duct texture (rivets) -->
+                        <pattern id="ductRivets" patternUnits="userSpaceOnUse" width="20" height="10">
+                            <circle cx="5" cy="5" r="1.5" fill="#888" />
+                            <circle cx="15" cy="5" r="1.5" fill="#888" />
+                        </pattern>
+
+                        <!-- Wall texture -->
+                        <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#E8E8E8;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#C0C0C0;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Sky background -->
+                    <rect x="0" y="0" width="800" height="500" fill="url(#skyGradient)" />
+
+                    <!-- Architecture Layer -->
+                    <g id="layer-architecture" class="layer-group">
+                        <!-- Floor with depth -->
+                        <rect x="50" y="450" width="700" height="20" fill="url(#floorGradient)" stroke="#5A4A3A" stroke-width="2" class="interactive-element" />
+                        <rect x="50" y="468" width="700" height="3" fill="#6B5A45" opacity="0.5" />
+
+                        <!-- Walls with texture and gradient -->
+                        <rect x="50" y="200" width="15" height="250" fill="url(#wallGradient)" stroke="#999" stroke-width="2" class="interactive-element wall-left" />
+                        <rect x="735" y="200" width="15" height="250" fill="url(#wallGradient)" stroke="#999" stroke-width="2" class="interactive-element wall-right" />
+
+                        <!-- Windows - larger and more prominent with frame detail -->
+                        <rect x="48" y="245" width="19" height="90" fill="#4682B4" stroke="#2C5F7C" stroke-width="3" opacity="0.3" class="window-element" />
+                        <rect x="50" y="250" width="15" height="80" fill="#87CEEB" stroke="#4682B4" stroke-width="2" opacity="0.7" class="window-element">
+                            <animate attributeName="opacity" values="0.7;0.9;0.7" dur="3s" repeatCount="indefinite" />
+                        </rect>
+                        <!-- Window panes -->
+                        <line x1="57.5" y1="250" x2="57.5" y2="330" stroke="#4682B4" stroke-width="1.5" />
+                        <line x1="50" y1="290" x2="65" y2="290" stroke="#4682B4" stroke-width="1.5" />
+
+                        <rect x="733" y="245" width="19" height="90" fill="#4682B4" stroke="#2C5F7C" stroke-width="3" opacity="0.3" class="window-element" />
+                        <rect x="735" y="250" width="15" height="80" fill="#87CEEB" stroke="#4682B4" stroke-width="2" opacity="0.7" class="window-element">
+                            <animate attributeName="opacity" values="0.7;0.9;0.7" dur="3s" repeatCount="indefinite" />
+                        </rect>
+                        <line x1="742.5" y1="250" x2="742.5" y2="330" stroke="#4682B4" stroke-width="1.5" />
+                        <line x1="735" y1="290" x2="750" y2="290" stroke="#4682B4" stroke-width="1.5" />
+
+                        <!-- Daylight rays with better animation -->
+                        <line x1="65" y1="270" x2="120" y2="300" stroke="#FFD700" stroke-width="2" opacity="0.4" stroke-linecap="round">
+                            <animate attributeName="opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite" />
+                        </line>
+                        <line x1="65" y1="290" x2="130" y2="320" stroke="#FFD700" stroke-width="2" opacity="0.3" stroke-linecap="round">
+                            <animate attributeName="opacity" values="0.1;0.4;0.1" dur="2.5s" repeatCount="indefinite" />
+                        </line>
+                        <line x1="65" y1="280" x2="125" y2="310" stroke="#FFD700" stroke-width="1.5" opacity="0.35" stroke-linecap="round">
+                            <animate attributeName="opacity" values="0.15;0.45;0.15" dur="2.2s" repeatCount="indefinite" />
+                        </line>
+
+                        <!-- Door with frame detail -->
+                        <rect x="680" y="380" width="50" height="70" fill="#8B4513" stroke="#654321" stroke-width="3" class="interactive-element" />
+                        <rect x="682" y="382" width="46" height="66" fill="#A0522D" opacity="0.3" />
+                        <circle cx="690" cy="415" r="3" fill="#FFD700" />
+                        <text x="705" y="420" font-size="10" fill="#FFF" text-anchor="middle" font-weight="bold">EXIT</text>
+
+                        <!-- Roof with detail -->
+                        <polygon points="40,200 400,120 760,200" fill="#696969" stroke="#404040" stroke-width="3" class="interactive-element" />
+                        <line x1="400" y1="120" x2="400" y2="200" stroke="#555" stroke-width="1" opacity="0.3" />
+
+                        <text x="57" y="240" font-size="11" fill="#000" font-weight="bold">Window</text>
+                        <text x="705" y="465" font-size="11" fill="#000" text-anchor="middle">Door</text>
+                    </g>
+
+                    <!-- Structural Layer with hatching -->
+                    <g id="layer-structural" class="layer-group">
+                        <!-- Columns with cross-hatch pattern -->
+                        <rect x="150" y="200" width="20" height="250" fill="#555" stroke="#333" stroke-width="2" class="interactive-element" />
+                        <rect x="152" y="202" width="16" height="246" fill="url(#columnHatch)" opacity="0.4" />
+                        <rect x="630" y="200" width="20" height="250" fill="#555" stroke="#333" stroke-width="2" class="interactive-element" />
+                        <rect x="632" y="202" width="16" height="246" fill="url(#columnHatch)" opacity="0.4" />
+
+                        <!-- Beam with diagonal hatching and depth -->
+                        <rect x="100" y="195" width="600" height="25" fill="#666" stroke="#444" stroke-width="2" class="interactive-element" />
+                        <rect x="102" y="197" width="596" height="21" fill="url(#steelHatch)" opacity="0.5" />
+                        <!-- Beam depth/shadow -->
+                        <rect x="100" y="218" width="600" height="3" fill="#333" opacity="0.4" />
+
+                        <text x="160" y="350" font-size="10" fill="#FFF" font-weight="bold">Column</text>
+                        <text x="400" y="210" font-size="10" fill="#FFF" text-anchor="middle" font-weight="bold">Steel Beam</text>
+                    </g>
+
+                    <!-- Envelope Layer with better texture -->
+                    <g id="layer-envelope" class="layer-group">
+                        <!-- Insulation with fluffy texture -->
+                        <rect x="100" y="220" width="600" height="15" fill="#FFD700" stroke="#FFA500" stroke-width="1" opacity="0.6" class="interactive-element" />
+                        <rect x="100" y="220" width="600" height="15" fill="url(#insulationTexture)" class="interactive-element" />
+                        <text x="400" y="232" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">Insulation</text>
+
+                        <!-- Wall insulation -->
+                        <rect x="65" y="200" width="8" height="250" fill="#FFD700" stroke="#FFA500" stroke-width="1" opacity="0.6" class="interactive-element" />
+                        <rect x="727" y="200" width="8" height="250" fill="#FFD700" stroke="#FFA500" stroke-width="1" opacity="0.6" class="interactive-element" />
+                    </g>
+
+                    <!-- Mechanical Layer with improved ducts -->
+                    <g id="layer-mechanical" class="layer-group">
+                        <!-- Ceiling plenum - more visible -->
+                        <rect x="100" y="235" width="600" height="60" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="8,4" />
+                        <text x="400" y="255" font-size="10" fill="#666" text-anchor="middle" font-weight="bold">Ceiling Plenum</text>
+
+                        <!-- Supply duct with rivets and depth -->
+                        <rect x="200" y="240" width="400" height="30" fill="#C0C0C0" stroke="#808080" stroke-width="2" class="interactive-element duct-element" />
+                        <rect x="200" y="240" width="400" height="30" fill="url(#ductRivets)" opacity="0.3" />
+                        <rect x="200" y="268" width="400" height="3" fill="#888" opacity="0.3" />
+
+                        <!-- Airflow particles - more visible -->
+                        <circle cx="250" cy="255" r="4" fill="#4A9EC9" opacity="0.7" class="airflow-particle">
+                            <animate attributeName="cx" from="250" to="550" dur="3s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0;0.7;0" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="300" cy="255" r="4" fill="#4A9EC9" opacity="0.7" class="airflow-particle">
+                            <animate attributeName="cx" from="300" to="600" dur="3s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0;0.7;0" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="350" cy="255" r="4" fill="#4A9EC9" opacity="0.7" class="airflow-particle">
+                            <animate attributeName="cx" from="350" to="580" dur="3s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0;0.7;0" dur="3s" repeatCount="indefinite" />
+                        </circle>
+
+                        <text x="400" y="258" font-size="11" fill="#000" text-anchor="middle" font-weight="bold">Supply Duct</text>
+
+                        <!-- Supply diffuser with more detail -->
+                        <rect x="280" y="295" width="40" height="8" fill="#A9A9A9" stroke="#696969" stroke-width="1" class="interactive-element" />
+                        <polygon points="300,303 290,315 310,315" fill="#A9A9A9" stroke="#696969" stroke-width="1" />
+                        <line x1="285" y1="297" x2="315" y2="297" stroke="#777" stroke-width="0.5" />
+                        <line x1="285" y1="300" x2="315" y2="300" stroke="#777" stroke-width="0.5" />
+                        <text x="300" y="332" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">Supply</text>
+
+                        <!-- Return grille with louvers -->
+                        <rect x="480" y="295" width="40" height="8" fill="#A9A9A9" stroke="#696969" stroke-width="1" class="interactive-element" />
+                        <line x1="485" y1="297" x2="515" y2="297" stroke="#696969" stroke-width="1" />
+                        <line x1="485" y1="300" x2="515" y2="300" stroke="#696969" stroke-width="1" />
+                        <line x1="485" y1="303" x2="515" y2="303" stroke="#696969" stroke-width="1" />
+                        <text x="500" y="332" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">Return</text>
+
+                        <!-- Show duct-beam conflict area (Problem 3!) -->
+                        <circle cx="400" cy="208" r="8" fill="none" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3,2" opacity="0.6">
+                            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1.5s" repeatCount="indefinite" />
+                        </circle>
+                    </g>
+
+                    <!-- Electrical Layer -->
+                    <g id="layer-electrical" class="layer-group">
+                        <!-- Light fixture with better glow -->
+                        <rect x="360" y="300" width="80" height="10" fill="#FFFF99" stroke="#FFD700" stroke-width="2" class="interactive-element light-element" filter="url(#glow)">
+                            <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite" />
+                        </rect>
+                        <circle cx="400" cy="305" r="3" fill="#FFF" />
+                        <!-- Light cone -->
+                        <polygon points="380,310 420,310 440,400 360,400" fill="#FFFF99" opacity="0.15" />
+                        <text x="400" y="325" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">Light Fixture</text>
+
+                        <!-- Outlet with detail -->
+                        <rect x="120" y="430" width="15" height="10" fill="#333" stroke="#000" stroke-width="1" class="interactive-element" />
+                        <circle cx="125" cy="435" r="2" fill="#FFD700" />
+                        <circle cx="130" cy="435" r="2" fill="#FFD700" />
+                        <text x="127" y="425" font-size="8" fill="#000" text-anchor="middle" font-weight="bold">Outlet</text>
+                    </g>
+
+                    <!-- Fire Protection Layer -->
+                    <g id="layer-fire" class="layer-group">
+                        <!-- Sprinkler with piping -->
+                        <circle cx="250" cy="290" r="5" fill="#FF0000" stroke="#8B0000" stroke-width="2" class="interactive-element sprinkler-element" />
+                        <line x1="250" y1="290" x2="250" y2="270" stroke="#8B0000" stroke-width="2" />
+                        <line x1="250" y1="270" x2="400" y2="270" stroke="#8B0000" stroke-width="2" stroke-dasharray="4,2" />
+                        <text x="250" y="265" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">Sprinkler</text>
+
+                        <!-- EXIT sign - more prominent -->
+                        <rect x="690" y="355" width="30" height="18" fill="#00FF00" stroke="#008000" stroke-width="2" class="interactive-element exit-sign">
+                            <animate attributeName="opacity" values="1;0.7;1" dur="1.5s" repeatCount="indefinite" />
+                        </rect>
+                        <text x="705" y="367" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">EXIT</text>
+                    </g>
+
+                    <!-- Ceiling line -->
+                    <rect x="100" y="295" width="600" height="5" fill="#F5F5DC" stroke="#D3D3D3" stroke-width="1" />
+                </svg>
+
+                <!-- Hotspots -->
+                <div class="hotspots-container">
+                    <!-- Left window -->
+                    <button class="hotspot" data-layer="architecture" data-hotspot="windows" style="left: 8%; top: 47%;" aria-label="Learn about windows and daylight">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Windows</span>
+                    </button>
+                    <!-- Door (bottom right) -->
+                    <button class="hotspot" data-layer="architecture" data-hotspot="door" style="left: 88%; top: 70%;" aria-label="Learn about door and circulation">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Door</span>
+                    </button>
+                    <!-- Supply diffuser (below duct, left side) - MOVED UP -->
+                    <button class="hotspot" data-layer="mechanical" data-hotspot="supply" style="left: 38%; top: 52%;" aria-label="Learn about supply diffuser">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Supply</span>
+                    </button>
+                    <!-- Return grille (below duct, right side) - MOVED UP -->
+                    <button class="hotspot" data-layer="mechanical" data-hotspot="return" style="left: 62%; top: 52%;" aria-label="Learn about return grille">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Return</span>
+                    </button>
+                    <!-- Light fixture (center, below ceiling) - MOVED UP -->
+                    <button class="hotspot" data-layer="electrical" data-hotspot="light" style="left: 50%; top: 50%;" aria-label="Learn about lighting fixture">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Light</span>
+                    </button>
+                    <!-- Outlet (bottom left, near floor) - MOVED UP -->
+                    <button class="hotspot" data-layer="electrical" data-hotspot="outlet" style="left: 16%; top: 68%;" aria-label="Learn about outlet and data">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Outlet</span>
+                    </button>
+                    <!-- Beam (top center) -->
+                    <button class="hotspot" data-layer="structural" data-hotspot="beam" style="left: 50%; top: 35%;" aria-label="Learn about beam and joist">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Beam</span>
+                    </button>
+                    <!-- Column (left side, vertical) -->
+                    <button class="hotspot" data-layer="structural" data-hotspot="column" style="left: 21%; top: 54%;" aria-label="Learn about column and load path">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Column</span>
+                    </button>
+                    <!-- Sprinkler (in plenum area) -->
+                    <button class="hotspot" data-layer="fire" data-hotspot="sprinkler" style="left: 31%; top: 49%;" aria-label="Learn about sprinkler head">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Sprinkler</span>
+                    </button>
+                    <!-- EXIT sign (right side, above door) -->
+                    <button class="hotspot" data-layer="fire" data-hotspot="exit" style="left: 88%; top: 62%;" aria-label="Learn about exit sign and alarm device">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">EXIT</span>
+                    </button>
+                    <!-- Insulation (top, yellow wavy area) -->
+                    <button class="hotspot" data-layer="envelope" data-hotspot="insulation" style="left: 50%; top: 38%;" aria-label="Learn about insulation and air barrier">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Insulation</span>
+                    </button>
+                    <!-- Window frame (right window) -->
+                    <button class="hotspot" data-layer="envelope" data-hotspot="window-frame" style="left: 92%; top: 47%;" aria-label="Learn about window frame and condensation risk">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-label">Frame</span>
+                    </button>
+                </div>
+
+                <canvas id="particleCanvas" class="particle-canvas"></canvas>
+            </section>
+
+            <!-- Right Column -->
+            <aside class="right-panel">
+                <section class="indicators" aria-label="Building performance indicators">
+                    <h2>📊 Performance</h2>
+
+                    <div class="indicator">
+                        <div class="indicator-header">
+                            <span class="indicator-label">😌 Comfort</span>
+                            <span class="indicator-value" id="comfort-value">60/100</span>
+                        </div>
+                        <div class="indicator-bar-container">
+                            <div class="indicator-bar" id="comfort-bar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                        </div>
+                        <span class="indicator-status" id="comfort-status">Okay</span>
+                    </div>
+
+                    <div class="indicator">
+                        <div class="indicator-header">
+                            <span class="indicator-label">💨 Air Quality</span>
+                            <span class="indicator-value" id="air-value">60/100</span>
+                        </div>
+                        <div class="indicator-bar-container">
+                            <div class="indicator-bar" id="air-bar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                        </div>
+                        <span class="indicator-status" id="air-status">Okay</span>
+                    </div>
+
+                    <div class="indicator">
+                        <div class="indicator-header">
+                            <span class="indicator-label">⚡ Energy</span>
+                            <span class="indicator-value" id="energy-value">60/100</span>
+                        </div>
+                        <div class="indicator-bar-container">
+                            <div class="indicator-bar" id="energy-bar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                        </div>
+                        <span class="indicator-status" id="energy-status">Okay</span>
+                    </div>
+
+                    <div class="indicator">
+                        <div class="indicator-header">
+                            <span class="indicator-label">🛡️ Safety</span>
+                            <span class="indicator-value" id="safety-value">60/100</span>
+                        </div>
+                        <div class="indicator-bar-container">
+                            <div class="indicator-bar" id="safety-bar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                        </div>
+                        <span class="indicator-status" id="safety-status">Okay</span>
+                    </div>
+
+                    <div class="update-log" id="updateLog" aria-live="polite" aria-atomic="true">
+                        Ready to solve problems!
+                    </div>
+                </section>
+
+            </aside>
+
+        </div><!-- end main-content -->
+        <!-- Problems Panel - Spans full width -->
+        <section class="problems-panel" aria-label="Building design challenges">
+            <h2>🎯 Design Challenges</h2>
+            <p class="helper-text">Pick the best solution!</p>
+
+            <div class="problem-container">
+                <!-- Problem 1: STRUCTURAL -->
+                <div class="problem active" data-problem="0">
+                    <h3 class="problem-title">Problem 1 (Structural): The school wants to remove a wall to make the classroom bigger.</h3>
+
+                    <div class="problem-hint">💡 <strong>Hint:</strong> Before changing walls, you must know if the wall is holding up the building.</div>
+                    <div class="problem-affects">📊 <strong>This affects:</strong> Safety & Comfort</div>
+
+                    <div class="problem-scores">
+                        <div class="problem-score-item">
+                            <div class="problem-score-label">
+                                <span>🛡️ Safety</span>
+                                <span id="problem0-safety-value">60/100</span>
+                            </div>
+                            <div class="problem-score-bar">
+                                <div class="problem-score-fill" id="problem0-safety-bar" style="width: 60%; background: linear-gradient(90deg, #00B894, #00D2A3);"></div>
+                            </div>
+                        </div>
+
+                        <div class="problem-score-item">
+                            <div class="problem-score-label">
+                                <span>🌡️ Comfort</span>
+                                <span id="problem0-comfort-value">60/100</span>
+                            </div>
+                            <div class="problem-score-bar">
+                                <div class="problem-score-fill" id="problem0-comfort-bar" style="width: 60%; background: linear-gradient(90deg, #FF6B35, #FF8C42);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fixes">
+                        <button class="fix-btn" data-problem="0" data-fix="0">
+                            <span class="fix-label">A</span> Ask a structural engineer if the wall is load-bearing before removing it
+                        </button>
+                        <button class="fix-btn" data-problem="0" data-fix="1">
+                            <span class="fix-label">B</span> Remove the wall and “see if anything cracks later”
+                        </button>
+                        <button class="fix-btn" data-problem="0" data-fix="2">
+                            <span class="fix-label">C</span> Cut a big opening without checking (it’ll probably be fine)
+                        </button>
+                    </div>
+
+                    <div class="explanation" id="explanation-0"></div>
+                </div>
+
+                <!-- Problem 2: ELECTRICAL -->
+                <div class="problem" data-problem="1">
+                    <h3 class="problem-title">Problem 2 (Electrical): Too many devices are plugged in and breakers keep tripping.</h3>
+
+                    <div class="problem-hint">💡 <strong>Hint:</strong> Electrical engineers don’t “hope” it works — they calculate loads and design circuits.</div>
+                    <div class="problem-affects">📊 <strong>This affects:</strong> Safety & Energy</div>
+
+                    <div class="problem-scores">
+                        <div class="problem-score-item">
+                            <div class="problem-score-label">
+                                <span>⚡ Energy</span>
+                                <span id="problem1-energy-value">60/100</span>
+                            </div>
+                            <div class="problem-score-bar">
+                                <div class="problem-score-fill" id="problem1-energy-bar" style="width: 60%; background: linear-gradient(90deg, #F7931E, #FDB45C);"></div>
+                            </div>
+                        </div>
+
+                        <div class="problem-score-item">
+                            <div class="problem-score-label">
+                                <span>🛡️ Safety</span>
+                                <span id="problem1-safety-value">60/100</span>
+                            </div>
+                            <div class="problem-score-bar">
+                                <div class="problem-score-fill" id="problem1-safety-bar" style="width: 60%; background: linear-gradient(90deg, #00B894, #00D2A3);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fixes">
+                        <button class="fix-btn" data-problem="1" data-fix="0">
+                            <span class="fix-label">A</span> Add new circuits/outlets and balance loads (done by an electrical engineer)
+                        </button>
+                        <button class="fix-btn" data-problem="1" data-fix="1">
+                            <span class="fix-label">B</span> Use power strips everywhere and keep resetting the breaker
+                        </button>
+                        <button class="fix-btn" data-problem="1" data-fix="2">
+                            <span class="fix-label">C</span> Replace the breaker with a bigger one without changing wiring
+                        </button>
+                    </div>
+
+                    <div class="explanation" id="explanation-1"></div>
+                </div>
+
+                <!-- Problem 3: HVAC -->
+                <div class="problem" data-problem="2">
+                    <h3 class="problem-title">Problem 3 (HVAC): The classroom feels stuffy after 20 minutes.</h3>
+
+                    <div class="problem-hint">💡 <strong>Hint:</strong> “Stuffy” usually means not enough fresh outdoor air.</div>
+                    <div class="problem-affects">📊 <strong>This affects:</strong> Air Quality & Comfort</div>
+
+                    <div class="problem-scores">
+                        <div class="problem-score-item">
+                            <div class="problem-score-label">
+                                <span>💨 Air Quality</span>
+                                <span id="problem2-air-value">60/100</span>
+                            </div>
+                            <div class="problem-score-bar">
+                                <div class="problem-score-fill" id="problem2-air-bar" style="width: 60%; background: linear-gradient(90deg, #4ECDC4, #44A08D);"></div>
+                            </div>
+                        </div>
+
+                        <div class="problem-score-item">
+                            <div class="problem-score-label">
+                                <span>🌡️ Comfort</span>
+                                <span id="problem2-comfort-value">60/100</span>
+                            </div>
+                            <div class="problem-score-bar">
+                                <div class="problem-score-fill" id="problem2-comfort-bar" style="width: 60%; background: linear-gradient(90deg, #FF6B35, #FF8C42);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fixes">
+                        <button class="fix-btn" data-problem="2" data-fix="0">
+                            <span class="fix-label">A</span> Increase outdoor air and make sure return air can flow back
+                        </button>
+                        <button class="fix-btn" data-problem="2" data-fix="1">
+                            <span class="fix-label">B</span> Increase supply airflow only
+                        </button>
+                        <button class="fix-btn" data-problem="2" data-fix="2">
+                            <span class="fix-label">C</span> Lower the thermostat temperature
+                        </button>
+                    </div>
+
+                    <div class="explanation" id="explanation-2"></div>
+                </div>
+            </div>
+
+
+            <button id="resetScores" class="btn-reset">🔄 Reset Scores</button>
+
+            <!-- Final Grade Display -->
+            <div class="final-grade" id="finalGrade">
+                <h3>🎓 Final Grade</h3>
+                <div class="grade-letter" id="gradeLetter">A</div>
+                <div class="grade-message" id="gradeMessage">Outstanding work!</div>
+                <div class="grade-details">
+                    <div class="grade-score">
+                        <div>🌡️ Comfort</div>
+                        <div id="final-comfort">--</div>
+                    </div>
+                    <div class="grade-score">
+                        <div>💨 Air Quality</div>
+                        <div id="final-air">--</div>
+                    </div>
+                    <div class="grade-score">
+                        <div>⚡ Energy</div>
+                        <div id="final-energy">--</div>
+                    </div>
+                    <div class="grade-score">
+                        <div>🛡️ Safety</div>
+                        <div id="final-safety">--</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="popover" class="popover hidden" role="dialog" aria-labelledby="popover-title" aria-modal="true">
+        <button class="popover-close" aria-label="Close information panel">&times;</button>
+        <div class="popover-icon" id="popover-icon">💡</div>
+        <h3 id="popover-title"></h3>
+        <p id="popover-content"></p>
+    </div>
+
+    <div id="achievementToast" class="achievement-toast hidden">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+            <strong id="achievementTitle">Achievement Unlocked!</strong>
+            <p id="achievementDesc">You solved a problem!</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="sbed-lab-logo.png" alt="SBED Lab" class="footer-sbed-logo">
+            </div>
+            <div class="footer-credits">
+                <p><strong>Dr. Nuha Aljuneidi</strong></p>
+                <p>Civil and Architectural Engineering Department</p>
+                <p>Lawrence Technological University | 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+// ============================================
+// ALL JAVASCRIPT IN ONE PLACE
+// ============================================
+
+const state = {
+    scores: { comfort: 60, air: 60, energy: 60, safety: 60 },
+    currentProblem: 0,
+    problemsSolved: [false, false, false],
+    selectedFixes: [null, null, null],
+    activeLayers: new Set(['architecture', 'mechanical', 'electrical', 'structural', 'fire', 'envelope']),
+    soundEnabled: true,
+    achievementsUnlocked: 0,
+    resultsSent: false
+};
+const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyI4cDhIBG5KwOEMMSYcCeApwQXun50oqG3xYvlxlPs1tutdV1uP7LLpbbwfyHryQxjww/exec";
+
+
+
+class SoundManager {
+    constructor() {
+        this.audioContext = null;
+        this.enabled = true;
+    }
+
+    init() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.log('Web Audio API not supported');
+        }
+    }
+
+    playTone(frequency, duration, type = 'sine') {
+        if (!this.enabled || !this.audioContext) return;
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        oscillator.frequency.value = frequency;
+        oscillator.type = type;
+        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+        oscillator.start(this.audioContext.currentTime);
+        oscillator.stop(this.audioContext.currentTime + duration);
+    }
+
+    playClick() { this.playTone(800, 0.1, 'square'); }
+    playSuccess() {
+        this.playTone(523.25, 0.15);
+        setTimeout(() => this.playTone(659.25, 0.15), 100);
+        setTimeout(() => this.playTone(783.99, 0.2), 200);
+    }
+    playToggle() { this.playTone(440, 0.1); }
+    playError() { this.playTone(200, 0.3, 'sawtooth'); }
+    playAchievement() {
+        const notes = [523.25, 587.33, 659.25, 783.99, 880.00];
+        notes.forEach((freq, i) => {
+            setTimeout(() => this.playTone(freq, 0.2), i * 100);
+        });
+    }
+    toggle() {
+        this.enabled = !this.enabled;
+        return this.enabled;
+    }
+}
+
+const soundManager = new SoundManager();
+
+class ParticleSystem {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+    }
+
+    resize() {
+        const rect = this.canvas.parentElement.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+    }
+
+    createBurst(x, y, count = 30, color = '#FFD700') {
+        for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 * i) / count;
+            const velocity = 2 + Math.random() * 3;
+            this.particles.push({
+                x: x * this.canvas.width,
+                y: y * this.canvas.height,
+                vx: Math.cos(angle) * velocity,
+                vy: Math.sin(angle) * velocity,
+                life: 1,
+                decay: 0.015 + Math.random() * 0.015,
+                size: 3 + Math.random() * 4,
+                color: color
+            });
+        }
+        this.animate();
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.particles = this.particles.filter(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.1;
+            p.life -= p.decay;
+            if (p.life > 0) {
+                this.ctx.globalAlpha = p.life;
+                this.ctx.fillStyle = p.color;
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                this.ctx.fill();
+                return true;
+            }
+            return false;
+        });
+        if (this.particles.length > 0) {
+            requestAnimationFrame(() => this.animate());
+        }
+    }
+}
+
+let particleSystem;
+
+const hotspotData = {
+    windows: { title: 'Windows & Daylight', content: 'Daylight helps learning, but glare and solar heat can create discomfort. Architects coordinate shading and window area.', layer: 'architecture', icon: '🪟' },
+    door: { title: 'Door & Circulation / Egress', content: 'Circulation and exits must be clear. Layout affects safety and how quickly people can leave in an emergency.', layer: 'architecture', icon: '🚪' },
+    supply: { title: 'Supply Diffuser', content: 'Supply air delivers heating/cooling and fresh air. Diffuser placement affects drafts and temperature uniformity.', layer: 'mechanical', icon: '💨' },
+    return: { title: 'Return Grille / Return Path', content: 'Return air must flow back to the unit. A poor return path can cause stuffy air and uneven comfort.', layer: 'mechanical', icon: '🔄' },
+    light: { title: 'Lighting Fixture', content: 'Lighting impacts comfort and energy. Avoid glare and coordinate fixture locations with ducts and structure.', layer: 'electrical', icon: '💡' },
+    outlet: { title: 'Outlet / Data', content: 'Power and data support instruction. Electrical layout must match how the room is used.', layer: 'electrical', icon: '🔌' },
+    beam: { title: 'Beam / Joist', content: 'Structure carries loads to columns and foundations. Beams take space and can conflict with ducts and lights.', layer: 'structural', icon: '🏗️' },
+    column: { title: 'Column / Load Path', content: 'Loads travel from roof/floor to columns and down to the foundation. Openings and penetrations must be coordinated.', layer: 'structural', icon: '⬇️' },
+    sprinkler: { title: 'Sprinkler Head', content: 'Sprinklers control fire growth. Coverage and spacing matter, and obstructions can block spray patterns.', layer: 'fire', icon: '💧' },
+    exit: { title: 'Exit Sign / Alarm Device', content: 'Life safety includes alarms and clear wayfinding. Emergency power may be required for critical systems.', layer: 'fire', icon: '🚨' },
+    insulation: { title: 'Insulation & Air Barrier', content: 'Insulation slows heat flow. Air leakage can cause drafts, higher energy use, and moisture problems.', layer: 'envelope', icon: '🧱' },
+    'window-frame': { title: 'Window Frame / Condensation Risk', content: 'Cold surfaces can cause condensation. Better glazing and thermal breaks reduce discomfort and moisture risk.', layer: 'envelope', icon: '❄️' }
+};
+
+const problemData = [
+  {
+    title: 'The school wants to remove a wall to make the classroom bigger.',
+    fixes: [
+      {
+        label: 'Ask a structural engineer if the wall is load-bearing before removing it',
+        changes: { safety: 30, comfort: 10, air: 0, energy: 0 },
+        explanation: '✅ Correct. Some walls support the floor/roof above. A structural engineer checks the loads and designs a safe plan.',
+        quality: 'best'
+      },
+      {
+        label: 'Remove the wall and “see if anything cracks later”',
+        changes: { safety: -20, comfort: -5, air: 0, energy: 0 },
+        explanation: '⚠️ Not safe. Waiting for damage means the structure could already be failing.',
+        quality: 'okay'
+      },
+      {
+        label: 'Cut a big opening without checking (it’ll probably be fine)',
+        changes: { safety: -30, comfort: -5, air: 0, energy: 0 },
+        explanation: '❌ Dangerous. Cutting a load-bearing wall can cause serious structural failure.',
+        quality: 'trap'
+      }
+    ]
+  },
+  {
+    title: 'Too many devices are plugged in and breakers keep tripping.',
+    fixes: [
+      {
+        label: 'Add new circuits/outlets and balance loads (done by an electrical engineer)',
+        changes: { safety: 15, energy: 20, comfort: 0, air: 0 },
+        explanation: '✅ Correct. Electrical engineers size circuits, breakers, and wiring so it’s safe and reliable.',
+        quality: 'best'
+      },
+      {
+        label: 'Use power strips everywhere and keep resetting the breaker',
+        changes: { safety: -10, energy: -5, comfort: 0, air: 0 },
+        explanation: '⚠️ Not a real fix. It can overload circuits and create fire risk.',
+        quality: 'okay'
+      },
+      {
+        label: 'Replace the breaker with a bigger one without changing wiring',
+        changes: { safety: -30, energy: 0, comfort: 0, air: 0 },
+        explanation: '❌ Very dangerous. Oversizing the breaker can overheat wiring and cause a fire.',
+        quality: 'trap'
+      }
+    ]
+  },
+  {
+    title: 'The classroom feels stuffy after 20 minutes.',
+    fixes: [
+      {
+        label: 'Increase outdoor air and make sure return air can flow back',
+        changes: { air: 30, comfort: 15, energy: 0, safety: 0 },
+        explanation: '✅ Correct. More outdoor air reduces CO₂ buildup and improves ventilation. A good return path helps air move through the room.',
+        quality: 'best'
+      },
+      {
+        label: 'Increase supply airflow only',
+        changes: { air: 10, comfort: -5, energy: -10, safety: 0 },
+        explanation: '⚠️ It may mix air better, but without enough outdoor air the room can still feel stuffy.',
+        quality: 'okay'
+      },
+      {
+        label: 'Lower the thermostat temperature',
+        changes: { air: -10, comfort: -5, energy: -5, safety: 0 },
+        explanation: '❌ Temperature is not ventilation. The air can still be stale even if it’s colder.',
+        quality: 'trap'
+      }
+    ]
+  }
+];
+
+const tips = [
+    "Each system must work together—coordination is key!",
+    "Good design balances comfort, energy, air quality, and safety.",
+    "The best solutions often address multiple concerns at once.",
+    "Click hotspots to discover how systems interact.",
+    "Toggle layers to see how everything fits together.",
+    "Real buildings require teamwork between many disciplines."
+];
+
+let tipIndex = 0;
+
+function rotateTip() {
+    const tipElement = document.getElementById('dynamicTip');
+    tipElement.style.opacity = '0';
+    setTimeout(() => {
+        tipIndex = (tipIndex + 1) % tips.length;
+        tipElement.textContent = tips[tipIndex];
+        tipElement.style.opacity = '1';
+    }, 300);
+}
+function initializeStudentName() {
+  const input = document.getElementById('studentName');
+  const greet = document.getElementById('studentGreet');
+  if (!input || !greet) return;
+
+  const saved = localStorage.getItem('studentName') || '';
+  input.value = saved;
+
+  const render = (name) => {
+    greet.textContent = name ? `Hi, ${name}!` : '';
+  };
+  render(saved);
+
+  input.addEventListener('input', () => {
+    const name = input.value.trim();
+    localStorage.setItem('studentName', name);
+    render(name);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    soundManager.init();
+    initializeStudentName();
+    const canvas = document.getElementById('particleCanvas');
+    particleSystem = new ParticleSystem(canvas);
+    initializeLayerToggles();
+    initializeHotspots();
+    initializeProblems();
+    initializePopover();
+    initializeSoundToggle();
+    updateIndicators();
+    setInterval(rotateTip, 8000);
+    initializeSVGInteractions();
+});
+
+function initializeSVGInteractions() {
+    const interactiveElements = document.querySelectorAll('.interactive-element');
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            if (soundManager.enabled) {
+                soundManager.playTone(600 + Math.random() * 200, 0.05);
+            }
+        });
+    });
+}
+
+function initializeSoundToggle() {
+    const soundBtn = document.getElementById('soundToggle');
+    soundBtn.addEventListener('click', () => {
+        const enabled = soundManager.toggle();
+        soundBtn.textContent = enabled ? '🔊' : '🔇';
+        soundBtn.classList.toggle('muted', !enabled);
+        state.soundEnabled = enabled;
+        if (enabled) soundManager.playSuccess();
+    });
+}
+
+function initializeLayerToggles() {
+    const layerButtons = document.querySelectorAll('.layer-toggle');
+    const showAllBtn = document.getElementById('showAll');
+    const hideAllBtn = document.getElementById('hideAll');
+    layerButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            toggleLayer(button);
+            soundManager.playToggle();
+        });
+    });
+    showAllBtn.addEventListener('click', () => { setAllLayers(true); soundManager.playClick(); });
+    hideAllBtn.addEventListener('click', () => { setAllLayers(false); soundManager.playClick(); });
+}
+
+function toggleLayer(button) {
+    const layer = button.dataset.layer;
+    const isActive = button.classList.toggle('active');
+    button.setAttribute('aria-pressed', isActive);
+    if (isActive) {
+        state.activeLayers.add(layer);
+    } else {
+        state.activeLayers.delete(layer);
+    }
+    updateLayerVisibility(layer, isActive);
+    if (isActive) {
+        const svgLayer = document.getElementById(`layer-${layer}`);
+        if (svgLayer) {
+            svgLayer.classList.add('highlight');
+            setTimeout(() => svgLayer.classList.remove('highlight'), 1500);
+        }
+    }
+}
+
+function setAllLayers(show) {
+    const layerButtons = document.querySelectorAll('.layer-toggle');
+    layerButtons.forEach(button => {
+        const layer = button.dataset.layer;
+        if (show) {
+            button.classList.add('active');
+            button.setAttribute('aria-pressed', 'true');
+            state.activeLayers.add(layer);
+        } else {
+            button.classList.remove('active');
+            button.setAttribute('aria-pressed', 'false');
+            state.activeLayers.delete(layer);
+        }
+        updateLayerVisibility(layer, show);
+    });
+}
+
+function updateLayerVisibility(layer, show) {
+    const svgLayer = document.getElementById(`layer-${layer}`);
+    const hotspots = document.querySelectorAll(`[data-layer="${layer}"]`);
+    if (svgLayer) {
+        if (show) {
+            svgLayer.classList.remove('hidden');
+        } else {
+            svgLayer.classList.add('hidden');
+        }
+    }
+    hotspots.forEach(hotspot => {
+        if (show) {
+            hotspot.classList.remove('hidden');
+        } else {
+            hotspot.classList.add('hidden');
+        }
+    });
+}
+
+function initializeHotspots() {
+    const hotspots = document.querySelectorAll('.hotspot');
+    hotspots.forEach(hotspot => {
+        hotspot.addEventListener('click', (e) => {
+            const hotspotId = e.currentTarget.dataset.hotspot;
+            openPopover(hotspotId, e.currentTarget);
+            soundManager.playClick();
+        });
+        hotspot.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const hotspotId = e.currentTarget.dataset.hotspot;
+                openPopover(hotspotId, e.currentTarget);
+                soundManager.playClick();
+            }
+        });
+    });
+}
+
+let activeHotspot = null;
+
+function initializePopover() {
+    const popover = document.getElementById('popover');
+    const closeBtn = popover.querySelector('.popover-close');
+    closeBtn.addEventListener('click', () => { closePopover(); soundManager.playClick(); });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !popover.classList.contains('hidden')) {
+            closePopover();
+        }
+    });
+}
+
+function openPopover(hotspotId, hotspotElement) {
+    const popover = document.getElementById('popover');
+    const title = document.getElementById('popover-title');
+    const content = document.getElementById('popover-content');
+    const icon = document.getElementById('popover-icon');
+    const data = hotspotData[hotspotId];
+    if (!data) return;
+    title.textContent = data.title;
+    content.textContent = data.content;
+    icon.textContent = data.icon;
+    popover.classList.remove('hidden');
+    activeHotspot = hotspotElement;
+    setTimeout(() => { popover.querySelector('.popover-close').focus(); }, 100);
+}
+
+function closePopover() {
+    const popover = document.getElementById('popover');
+    popover.classList.add('hidden');
+    if (activeHotspot) {
+        activeHotspot.focus();
+        activeHotspot = null;
+    }
+}
+
+function initializeProblems() {
+    const fixButtons = document.querySelectorAll('.fix-btn');
+    const prevBtn = document.getElementById('prevProblem');
+    const nextBtn = document.getElementById('nextProblem');
+    const resetBtn = document.getElementById('resetScores');
+    fixButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const problemIndex = parseInt(button.dataset.problem);
+            const fixIndex = parseInt(button.dataset.fix);
+            selectFix(problemIndex, fixIndex);
+        });
+    });
+    if (prevBtn) prevBtn.addEventListener('click', () => { navigateProblem(-1); soundManager.playClick(); });
+if (nextBtn) nextBtn.addEventListener('click', () => { navigateProblem(1); soundManager.playClick(); });
+    resetBtn.addEventListener('click', () => { resetScores(); soundManager.playClick(); });
+    updateProblemDisplay();
+}
+
+function selectFix(problemIndex, fixIndex) {
+    state.problemsSolved[problemIndex] = true;
+    state.selectedFixes[problemIndex] = fixIndex;
+    const problemButtons = document.querySelectorAll(`[data-problem="${problemIndex}"].fix-btn`);
+    problemButtons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === fixIndex) {
+            btn.classList.add('selected');
+        }
+    });
+    const fix = problemData[problemIndex].fixes[fixIndex];
+    applyScoreChanges(fix.changes);
+    const explanation = document.getElementById(`explanation-${problemIndex}`);
+    explanation.textContent = fix.explanation;
+    explanation.classList.add('visible');
+    if (fix.quality === 'best') {
+        soundManager.playSuccess();
+        particleSystem.createBurst(0.5, 0.5, 40, '#27AE60');
+        const solvedCount = state.problemsSolved.filter(s => s).length;
+        if (solvedCount > state.achievementsUnlocked) {
+            state.achievementsUnlocked = solvedCount;
+            showAchievement(solvedCount);
+            updateAchievementCounter();
+        }
+    } else if (fix.quality === 'trap') {
+        soundManager.playError();
+    } else {
+        soundManager.playClick();
+    }
+    
+    // Check if all problems solved and show grade
+    setTimeout(() => calculateFinalGrade(), 1000);
+}
+
+function navigateProblem(direction) {
+    const newIndex = state.currentProblem + direction;
+    if (newIndex >= 0 && newIndex < problemData.length) {
+        state.currentProblem = newIndex;
+        updateProblemDisplay();
+    }
+}
+
+function updateProblemDisplay() {
+    const problems = document.querySelectorAll('.problem');
+    const indicator = document.getElementById('problemIndicator');
+    const prevBtn = document.getElementById('prevProblem');
+    const nextBtn = document.getElementById('nextProblem');
+    problems.forEach((problem, index) => {
+        if (index === state.currentProblem) {
+            problem.classList.add('active');
+        } else {
+            problem.classList.remove('active');
+        }
+    });
+if (indicator) indicator.textContent = `${state.currentProblem + 1} of ${problemData.length}`;
+if (prevBtn) prevBtn.disabled = state.currentProblem === 0;
+if (nextBtn) nextBtn.disabled = state.currentProblem === problemData.length - 1;
+
+}
+
+function applyScoreChanges(changes) {
+    const changeLog = [];
+    for (const [key, value] of Object.entries(changes)) {
+        if (value !== 0) {
+            state.scores[key] = Math.max(0, Math.min(100, state.scores[key] + value));
+            const sign = value > 0 ? '+' : '';
+            const label = key.charAt(0).toUpperCase() + key.slice(1);
+            const displayLabel = label === 'Air' ? 'Air Quality' : label;
+            changeLog.push(`${displayLabel} ${sign}${value}`);
+        }
+    }
+    updateIndicators(changeLog.join(', '));
+}
+
+function resetScores() {
+    state.scores = { comfort: 60, air: 60, energy: 60, safety: 60 };
+    state.problemsSolved = [false, false, false];
+    state.selectedFixes = [null, null, null];
+    state.achievementsUnlocked = 0;
+     state.resultsSent = false;
+    const allFixButtons = document.querySelectorAll('.fix-btn');
+    allFixButtons.forEach(btn => {
+        btn.disabled = false;
+        btn.classList.remove('selected');
+    });
+    const explanations = document.querySelectorAll('.explanation');
+    explanations.forEach(exp => {
+        exp.classList.remove('visible');
+        exp.textContent = '';
+    });
+    updateIndicators('Scores reset to initial values');
+    updateAchievementCounter();
+    
+    // Hide final grade
+    const finalGrade = document.getElementById('finalGrade');
+    if (finalGrade) finalGrade.classList.remove('visible');
+}
+
+// Toggle intro section
+function toggleIntro() {
+    const intro = document.getElementById('introSection');
+    const btn = intro.querySelector('.intro-toggle');
+    intro.classList.toggle('collapsed');
+    btn.textContent = intro.classList.contains('collapsed') ? 'Show Tutorial' : 'Hide Tutorial';
+}
+// ✅ FULL REPLACEMENT (drop-in)
+
+// Sends results and RETURNS a Promise so .then/.catch works
+async function sendResults(correctCount) {
+  const studentName = (document.getElementById("studentName")?.value || "").trim();
+
+  const payload = {
+    studentName,
+    correctCount,
+    totalQuestions: 3,
+    timestamp: new Date().toISOString(),
+    page: location.href
+  };
+
+  const body = new URLSearchParams(payload);
+
+  const res = await fetch(RESULTS_ENDPOINT, {
+    method: "POST",
+    body
+  });
+
+  if (!res.ok) {
+    const t = await res.text().catch(() => "");
+    throw new Error(`Send failed (HTTP ${res.status}) ${t}`);
+  }
+
+  return true;
+}
+
+
+function calculateFinalGrade() {
+  const allSolved = state.problemsSolved.every(solved => solved);
+  if (!allSolved) return;
+
+  // ✅ STOP: do not send twice
+  if (state.resultsSent) return;
+
+  // ===== Send results (0–3 correct) =====
+  const correctCount = state.selectedFixes.filter(f => f === 0).length;
+
+  sendResults(correctCount)
+    .then(() => {
+      state.resultsSent = true; // mark sent only after success
+    })
+    .catch((err) => {
+      console.error("Failed to send results:", err);
+      // keep resultsSent = false so it could retry
+    });
+
+  // ===== Final grade display =====
+  const scores = state.scores;
+  const average = (scores.comfort + scores.air + scores.energy + scores.safety) / 4;
+
+  let grade, gradeClass, message;
+  if (average >= 85) {
+    grade = 'A'; gradeClass = 'grade-a';
+    message = "🌟 Outstanding! You're a building systems expert!";
+  } else if (average >= 75) {
+    grade = 'B'; gradeClass = 'grade-b';
+    message = '✨ Great job! You understand the key concepts!';
+  } else if (average >= 65) {
+    grade = 'C'; gradeClass = 'grade-c';
+    message = '👍 Good effort! Review the hints and try again!';
+  } else if (average >= 55) {
+    grade = 'D'; gradeClass = 'grade-d';
+    message = "⚠️ You're getting there. Think about root causes!";
+  } else {
+    grade = 'F'; gradeClass = 'grade-f';
+    message = '💪 Keep trying! Read the tutorial and hints carefully!';
+  }
+
+  const finalGradeDiv = document.getElementById('finalGrade');
+  const gradeLetter = document.getElementById('gradeLetter');
+  const gradeMessage = document.getElementById('gradeMessage');
+
+  if (gradeLetter) {
+    gradeLetter.textContent = grade;
+    gradeLetter.className = `grade-letter ${gradeClass}`;
+  }
+  if (gradeMessage) gradeMessage.textContent = message;
+
+  const fc = document.getElementById('final-comfort');
+  const fa = document.getElementById('final-air');
+  const fe = document.getElementById('final-energy');
+  const fs = document.getElementById('final-safety');
+
+  if (fc) fc.textContent = `${scores.comfort}/100`;
+  if (fa) fa.textContent = `${scores.air}/100`;
+  if (fe) fe.textContent = `${scores.energy}/100`;
+  if (fs) fs.textContent = `${scores.safety}/100`;
+
+  if (finalGradeDiv) {
+    finalGradeDiv.classList.add('visible');
+    finalGradeDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+
+function updateIndicators(logMessage = '') {
+    const indicators = ['comfort', 'air', 'energy', 'safety'];
+    indicators.forEach(indicator => {
+        const score = state.scores[indicator];
+        const bar = document.getElementById(`${indicator}-bar`);
+        const value = document.getElementById(`${indicator}-value`);
+        const status = document.getElementById(`${indicator}-status`);
+        if (bar) {
+            bar.style.width = `${score}%`;
+            bar.setAttribute('aria-valuenow', score);
+        }
+        if (value) value.textContent = `${score}/100`;
+        if (status) {
+            let statusText = 'Needs work';
+            if (score >= 70) {
+                statusText = 'Good';
+            } else if (score >= 40) {
+                statusText = 'Okay';
+            }
+            status.textContent = statusText;
+        }
+    });
+    
+    // ===============================
+// Update problem-specific scores (MATCH HTML IDS)
+// ===============================
+
+// Problem 0: Safety + Comfort
+const p0SafetyBar = document.getElementById('problem0-safety-bar');
+const p0SafetyValue = document.getElementById('problem0-safety-value');
+const p0ComfortBar = document.getElementById('problem0-comfort-bar');
+const p0ComfortValue = document.getElementById('problem0-comfort-value');
+
+if (p0SafetyBar) p0SafetyBar.style.width = `${state.scores.safety}%`;
+if (p0SafetyValue) p0SafetyValue.textContent = `${state.scores.safety}/100`;
+if (p0ComfortBar) p0ComfortBar.style.width = `${state.scores.comfort}%`;
+if (p0ComfortValue) p0ComfortValue.textContent = `${state.scores.comfort}/100`;
+
+// Problem 1: Energy + Safety
+const p1EnergyBar = document.getElementById('problem1-energy-bar');
+const p1EnergyValue = document.getElementById('problem1-energy-value');
+const p1SafetyBar = document.getElementById('problem1-safety-bar');
+const p1SafetyValue = document.getElementById('problem1-safety-value');
+
+if (p1EnergyBar) p1EnergyBar.style.width = `${state.scores.energy}%`;
+if (p1EnergyValue) p1EnergyValue.textContent = `${state.scores.energy}/100`;
+if (p1SafetyBar) p1SafetyBar.style.width = `${state.scores.safety}%`;
+if (p1SafetyValue) p1SafetyValue.textContent = `${state.scores.safety}/100`;
+
+// Problem 2: Air + Comfort
+const p2AirBar = document.getElementById('problem2-air-bar');
+const p2AirValue = document.getElementById('problem2-air-value');
+const p2ComfortBar = document.getElementById('problem2-comfort-bar');
+const p2ComfortValue = document.getElementById('problem2-comfort-value');
+
+if (p2AirBar) p2AirBar.style.width = `${state.scores.air}%`;
+if (p2AirValue) p2AirValue.textContent = `${state.scores.air}/100`;
+if (p2ComfortBar) p2ComfortBar.style.width = `${state.scores.comfort}%`;
+if (p2ComfortValue) p2ComfortValue.textContent = `${state.scores.comfort}/100`;
+
+    if (logMessage) {
+        const log = document.getElementById('updateLog');
+        if (log) log.textContent = `Last update: ${logMessage}`;
+    }
+}
+
+function showAchievement(count) {
+    const toast = document.getElementById('achievementToast');
+    const title = document.getElementById('achievementTitle');
+    const desc = document.getElementById('achievementDesc');
+    const achievements = [
+        { title: 'Problem Solver!', desc: 'You solved your first problem!' },
+        { title: 'Getting Better!', desc: 'Two problems down, one to go!' },
+        { title: 'Building Expert!', desc: 'All problems solved! Great work!' }
+    ];
+    const achievement = achievements[count - 1];
+    title.textContent = achievement.title;
+    desc.textContent = achievement.desc;
+    toast.classList.remove('hidden');
+    soundManager.playAchievement();
+    setTimeout(() => { toast.classList.add('hidden'); }, 4000);
+}
+
+function updateAchievementCounter() {
+    const counter = document.getElementById('achievementCount');
+    counter.textContent = `${state.achievementsUnlocked}/3`;
+}
+
+document.addEventListener('keydown', (e) => {
+    const popover = document.getElementById('popover');
+    if (!popover.classList.contains('hidden') && e.key === 'Tab') {
+        const focusable = popover.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const firstFocusable = focusable[0];
+        const lastFocusable = focusable[focusable.length - 1];
+         if (e.target === firstFocusable && e.shiftKey) {
+            e.preventDefault();
+            lastFocusable.focus();
+        } else if (e.target === lastFocusable && !e.shiftKey) {
+            e.preventDefault();
+            firstFocusable.focus();
+        }
+    }
+});
+    </script>
+</body>
+</html>
