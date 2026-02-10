@@ -1537,32 +1537,32 @@ header h1 {
             <p class="helper-text">Click to toggle · Watch them glow!</p>
 
             <div class="toggle-group">
-                <button class="layer-toggle active" data-layer="architecture" aria-pressed="true">
+                <button class="layer-toggle active" data-layer="architecture" aria-pressed="false">
                     <span class="toggle-indicator"></span>
                     <span class="layer-icon">🏛️</span>
                     Architecture
                 </button>
-                <button class="layer-toggle active" data-layer="mechanical" aria-pressed="true">
+                <button class="layer-toggle active" data-layer="mechanical" aria-pressed="false">
                     <span class="toggle-indicator"></span>
                     <span class="layer-icon">❄️</span>
                     Mechanical/HVAC
                 </button>
-                <button class="layer-toggle active" data-layer="electrical" aria-pressed="true">
+                <button class="layer-toggle active" data-layer="electrical" aria-pressed="false">
                     <span class="toggle-indicator"></span>
                     <span class="layer-icon">⚡</span>
                     Electrical
                 </button>
-                <button class="layer-toggle active" data-layer="structural" aria-pressed="true">
+                <button class="layer-toggle active" data-layer="structural" aria-pressed="false">
                     <span class="toggle-indicator"></span>
                     <span class="layer-icon">🏗️</span>
                     Structural
                 </button>
-                <button class="layer-toggle active" data-layer="fire" aria-pressed="true">
+                <button class="layer-toggle active" data-layer="fire" aria-pressed="false">
                     <span class="toggle-indicator"></span>
                     <span class="layer-icon">🔥</span>
                     Fire Protection
                 </button>
-                <button class="layer-toggle active" data-layer="envelope" aria-pressed="true">
+                <button class="layer-toggle active" data-layer="envelope" aria-pressed="false">
                     <span class="toggle-indicator"></span>
                     <span class="layer-icon">🧱</span>
                     Building Envelope
@@ -2136,7 +2136,7 @@ const state = {
     currentProblem: 0,
     problemsSolved: [false, false, false],
     selectedFixes: [null, null, null],
-    activeLayers: new Set(['architecture', 'mechanical', 'electrical', 'structural', 'fire', 'envelope']),
+    activeLayers: new Set(),
     soundEnabled: true,
     achievementsUnlocked: 0,
     resultsSent: false
@@ -2386,6 +2386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('particleCanvas');
     particleSystem = new ParticleSystem(canvas);
     initializeLayerToggles();
+    setAllLayers(false);
     initializeHotspots();
     initializeProblems();
     initializePopover();
@@ -2869,5 +2870,6 @@ document.addEventListener('keydown', (e) => {
     </script>
 </body>
 </html>
+
 
 
