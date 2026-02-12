@@ -2371,20 +2371,20 @@ function initializeStudentName() {
   const greet = document.getElementById('studentGreet');
   if (!input || !greet) return;
 
-  const saved = localStorage.getItem('studentName') || '';
-  input.value = saved;
+  // ✅ Always empty on refresh / reopen
+  input.value = '';
+  greet.textContent = '';
 
-  const render = (name) => {
-    greet.textContent = name ? `Hi, ${name}!` : '';
-  };
-  render(saved);
+  // ✅ Remove any old saved name (from previous versions)
+  localStorage.removeItem('studentName');
 
+  // Keep the greeting updating while typing (but do NOT save)
   input.addEventListener('input', () => {
     const name = input.value.trim();
-    localStorage.setItem('studentName', name);
-    render(name);
+    greet.textContent = name ? `Hi, ${name}!` : '';
   });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     soundManager.init();
@@ -2876,6 +2876,7 @@ document.addEventListener('keydown', (e) => {
     </script>
 </body>
 </html>
+
 
 
 
